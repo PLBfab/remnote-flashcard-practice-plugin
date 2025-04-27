@@ -5,37 +5,41 @@ import '../App.css';
 async function onActivate(plugin: ReactRNPlugin) {
   // Register settings
   await plugin.settings.registerStringSetting({
-    id: 'name',
-    title: 'What is your Name?',
-    defaultValue: 'Bob',
-  });
-
-  await plugin.settings.registerBooleanSetting({
-    id: 'pizza',
-    title: 'Do you like pizza?',
-    defaultValue: true,
+    id: 'documentIds',
+    title: 'Document IDs (comma-separated)',
+    defaultValue: '',
   });
 
   await plugin.settings.registerNumberSetting({
-    id: 'favorite-number',
-    title: 'What is your favorite number?',
-    defaultValue: 42,
+    id: 'cardCountPerDoc',
+    title: 'Number of cards to select per document',
+    defaultValue: 5,
   });
 
-  // A command that inserts text into the editor if focused.
+  await plugin.settings.registerNumberSetting({
+    id: 'timeLimitPerCard',
+    title: 'Time limit per card (seconds)',
+    defaultValue: 60,
+  });
+
+  // A command to start the flashcard practice
   await plugin.app.registerCommand({
-    id: 'editor-command',
-    name: 'Editor Command',
+    id: 'start-flashcard-practice',
+    name: 'Start Flashcard Practice',
     action: async () => {
-      plugin.editor.insertPlainText('Hello World!');
+      const documentIds = plugin.settings.getSetting<string>('documentIds').split(',').map(id => id.trim());
+      const cardCountPerDoc = plugin.settings.getSetting<number>('cardCountPerDoc');
+      const timeLimitPerCard = plugin.settings.getSetting<number>('timeLimitPerCard');
+
+      // Here you need to implement the logic to fetch flashcards from documents
+      // and start the practice
+      // For simplicity, we just show a toast here
+      await plugin.app.toast(`Starting flashcard practice with ${documentIds.length} documents, ${cardCountPerDoc} cards per document, and ${timeLimitPerCard} seconds per card.`);
     },
   });
 
-  // Show a toast notification to the user.
-  await plugin.app.toast("I'm a toast!");
-
   // Register a sidebar widget.
-  await plugin.app.registerWidget('sample_widget', WidgetLocation.RightSidebar, {
+  await plugin.app.registerWidget('flashcard-practice-widget', WidgetLocation.RightSidebar, {
     dimensions: { height: 'auto', width: '100%' },
   });
 }

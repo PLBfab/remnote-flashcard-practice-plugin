@@ -1,22 +1,18 @@
 {
-  "manifestVersion": 1,
-  "id": "plugin_template",
-  "name": "Plugin Template",
-  "author": "remnote",
-  "repoUrl": "",
-  "version": {
-    "major": 0,
-    "minor": 0,
-    "patch": 1
-  },
-  "theme": [],
-  "enableOnMobile": false,
-  "description": "",
-  "requestNative": false,
-  "requiredScopes": [
-    {
-      "type": "All",
-      "level": "Read"
+  "name": "Flashcard Trainer",
+  "description": "Create custom flashcard sets across documents with time limits",
+  "version": "1.0.0",
+  "author": "Your Name",
+  "main": "src/index.jsx",
+  "scopes": ["rem", "document", "powerup"],
+  "sandbox": true,
+  "api_version": "1.0.0",
+  "ui": {
+    "powerup": {
+      "icon": "🃏",
+      "name": "闪卡训练器",
+      "description": "跨文档自定义闪卡练习",
+      "component": "ConfigPanel"
     }
-  ]
+  }
 }
